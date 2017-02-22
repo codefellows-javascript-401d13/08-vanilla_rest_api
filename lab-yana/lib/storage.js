@@ -4,7 +4,7 @@ const storage = {}; //need this object to store info for our requests
 
 module.exports = exports = {};
 
-exports.createItem = function(schemaName, item) {
+exports.createItem = function(schemaName, item) { // called for POST
   if (!schemaName) return Promise.reject(new Error('expected schema name'));
   if (!item) return Promise.reject(new Error('expected item'));
   if (!storage[schemaName]) storage[schemaName] = {}; //if storage doesn't already contain info about this item, make it
@@ -12,7 +12,7 @@ exports.createItem = function(schemaName, item) {
   return Promise.resolve(item);
 }
 
-exports.fetchItem = function(schemaName, id) {
+exports.fetchItem = function(schemaName, id) { //called for GET
   return new Promise((resolve, reject) => {
     if (!schemaName) return reject(new Error('expected schema name'));
     if (!id) return reject(new Error('expected id'));
