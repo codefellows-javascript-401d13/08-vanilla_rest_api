@@ -23,6 +23,8 @@
   "homepage": "https://github.com/dkulp23/08-vanilla_rest_api#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
     "superagent": "^3.4.4"
   },
   "dependencies": {
