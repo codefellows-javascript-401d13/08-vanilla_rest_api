@@ -28,3 +28,21 @@ exports.fetchItem = function fetchItem(schemaName, id) {
     resolve(item);
   });
 };
+
+exports.deleteItem = function deleteItem(schemaName, id) {
+  return new Promise((resolve, reject) => {
+    if (!schemaName) return Promise.reject(new Error('schema not provided'));
+    if (!id) return Promise.reject(new Error('id not provided'));
+
+    let schema = storage[schemaName];
+    if (!schema) return reject(new Error('schema not found'));
+
+    let item = schema[id];
+    if (!item) return reject(new Error('item not found'));
+
+    console.log(storage);
+    delete storage[schemaName][id];
+    console.log(storage);
+    resolve();
+  });
+}

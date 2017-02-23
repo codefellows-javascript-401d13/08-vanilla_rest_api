@@ -18,10 +18,10 @@ router.post('/api/sneaker', function(req, res) {
     res.end();
   } catch(err) {
     console.error(err);
-    res.writeHead(404, {
+    res.writeHead(400, {
       'Content-Type': 'text/plain',
     });
-    res.write('not found');
+    res.write('bad request');
     res.end();
   }
 });
@@ -41,7 +41,7 @@ router.get('/api/sneaker', function(req, res) {
       res.writeHead(404, {
         'Content-Type': 'text/plain',
       });
-      res.write('not found');
+      res.write('sneaker not found');
       res.end();
     });
     return;
@@ -53,6 +53,32 @@ router.get('/api/sneaker', function(req, res) {
   res.end();
 });
 
+router.delete('/api/sneaker', function(req, res) {
+  if (req.url.query.id) {
+    storage.deleteItem('sneaker', req.url.query.id)
+    .then( () => {
+      res.writeHead(204, {
+        'Content-Type': 'text/plain',
+      });
+      res.write('delete complete');
+      res.end();
+    })
+    .catch( err => {
+      console.error(err);
+      res.writeHead(404, {
+        'Content-Type': 'text/plain',
+      });
+      res.write('sneaker not found');
+      res.end();
+    });
+    return;
+  }
+  res.writeHead(400, {
+    'Content-Type': 'text/plain',
+  });
+  res.write('bad request');
+  res.end();
+});
 
 const server = http.createServer(router.route());
 
