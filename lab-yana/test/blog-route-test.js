@@ -7,6 +7,38 @@ require('../server.js');
 
 describe('Blog Routes', function() {
   var blog = null;
+  describe('any request with unregistered route', function() {
+    it('POST should return 404 not found', function(done) {
+      request.post('localhost:3002/api/wrongRoute')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(404);
+        expect(res.text).to.equal('route not found');
+        done();
+      });
+    });
+    it('GET should return 404 not found', function(done) {
+      request.get('localhost:3002/api/alsoWrongRoute')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(404);
+        expect(res.text).to.equal('route not found');
+        done();
+      });
+    });
+    it('DELETE should return 404 not found', function(done) {
+      request.delete('localhost:3002/api/wrongestRouteYet')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(404);
+        expect(res.text).to.equal('route not found');
+        done();
+      });
+    });
+  });
   describe('POST: /api/blog', function() {
     it('should return a blog entry', function(done) {
       request.post('localhost:3002/api/blog')
@@ -17,7 +49,16 @@ describe('Blog Routes', function() {
         expect(res.body.name).to.equal('test name');
         expect(res.body.content).to.equal('test content');
         blog = res.body;
-        console.log('the blog', blog);
+        // console.log('the blog', blog);
+        done();
+      });
+    });
+    it('should return a 400 bad request', function(done) {
+      request.post('localhost:3002/api/blog')
+      .send({ name: 'test name' })
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(400);
         done();
       });
     });
@@ -32,7 +73,25 @@ describe('Blog Routes', function() {
         expect(res.body.name).to.equal('test name');
         expect(res.body.content).to.equal('test content');
         blog = res.body;
-        console.log('the blog', blog);
+        // console.log('the blog', blog);
+        done();
+      });
+    });
+    it('should return a 404 not found', function(done) {
+      request.get('localhost:3002/api/blog?id=wrongID')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
+    it('should return a 400 bad request', function(done) {
+      request.get('localhost:3002/api/blog')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(400);
         done();
       });
     });
@@ -46,7 +105,7 @@ describe('Blog Routes', function() {
         expect(res.status).to.equal(204);
         expect(res.body).to.be.empty;
         blog = res.body;
-        console.log('after delete: ', blog);
+        // console.log('after delete: ', blog);
         done();
       });
     });
