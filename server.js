@@ -30,7 +30,7 @@ router.get('/api/mine', function(req, res){
     });
 
     return;
-  };
+  }
   res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
@@ -55,7 +55,7 @@ router.post('/api/mine', function(req, res) {
     });
     res.write('bad request');
     res.end();
-  };
+  }
 });
 
 router.delete('/api/mine', function(req, res){
@@ -101,7 +101,7 @@ router.get('/api/note', function(req, res){
     });
 
     return;
-  };
+  }
   res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
@@ -126,7 +126,7 @@ router.post('/api/note', function(req, res) {
     });
     res.write('bad request');
     res.end();
-  };
+  }
 });
 
 const server = http.createServer(router.route());

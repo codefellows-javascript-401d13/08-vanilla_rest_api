@@ -23,6 +23,19 @@ describe('My Data Routes', function(){
     });
   });
 
+  describe('POST: api/mine', function() {
+    it('it should return a 400 error', function(done){
+      request.post('localhost:3000/api/mine')
+      .send({})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.text).to.equal('bad request');
+        done();
+      })
+    });
+  });
+
+
   describe('GET: /api/mine', function(){
     it('should return mine', function(done){
       request.get(`localhost:3000/api/mine?id=${mine.id}`)
@@ -35,4 +48,30 @@ describe('My Data Routes', function(){
       });
     });
   });
+
+  describe('GET: /api/mine', function() {
+    it('should return a 400 error if no id was provided', function(done){
+      request.get('localhost:3000/api/mine')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(err).to.equal.null;
+        expect(res.text).to.equal('bad request');
+        done();
+      });
+    });
+  });
+
+  describe('GET: /api/mine', function(){
+    it('should return a 404 not found', function(done){
+      request.get('localhost:3000/api/mine?id=123')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.text).to.equal('not found');
+        done();
+      });
+    });
+  });
+
+
+
 });
