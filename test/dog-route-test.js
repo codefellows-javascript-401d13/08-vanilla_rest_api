@@ -10,13 +10,13 @@ describe('Dog Routes', function() {
   describe('POST: /api/dog', function() {
     it('should return a dog', function(done) {
       request.post('localhost:8000/api/dog')
-      .send({ name: 'testname', breed: 'testcontent' })
+      .send({ name: 'test name', breed: 'test breed' })
       .end((err, res) => {
         if (err) console.log('nope');
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('test name');
-        expect(res.body.content).to.equal('test breed');
+        expect(res.body.breed).to.equal('test breed');
         dog = res.body;
         done();
       });
@@ -30,7 +30,7 @@ describe('Dog Routes', function() {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('test name');
-        expect(res.body.content).to.equal('test breed');
+        expect(res.body.breed).to.equal('test breed');
         done();
       });
     });

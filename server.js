@@ -44,7 +44,7 @@ router.post('/api/dog', function(req,res){
       'Content-Type': 'application/json'
     });
     res.write(JSON.stringify(dog));
-    res.write('\nYou used the ' + req.method + ' method.');
+    // res.write('\nYou used the ' + req.method + ' method.');
     res.end();
   } catch (err) {
     console.error(err);
