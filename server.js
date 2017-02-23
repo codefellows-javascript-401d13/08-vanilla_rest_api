@@ -36,7 +36,6 @@ router.get('/api/rwby', function(req, res) {
 router.post('/api/rwby', function(req, res){
   try{
     var rwby = new Rwby(req.body.name, req.body.weapon);
-    console.log('This is the object', rwby);
     storage.createItem('rwby', rwby);
     res.writeHead(200, {
       'Content-Type': 'application/json'
@@ -51,6 +50,32 @@ router.post('/api/rwby', function(req, res){
     res.write('bad request');
     res.end();
   }
+});
+
+router.delete('/api/rwby', function(req, res) {
+  if(req.url.query.id) {
+    storage.deleteItem('rwby', req.url.query.id)
+    .then(rwby => {
+      res.writeHead(204, {
+        'Content-Type': 'application/json'
+      });
+      res.write(JSON.stringify(rwby) + 'Deleted');
+      res.end();
+    }).catch(err => {
+      console.error(err);
+      res.writeHead(404, {
+        'Content-Type': 'text/plain'
+      });
+      res.write('item not found');
+      res.end();
+    });
+    return;
+  }
+  res.writeHead(400, {
+    'Content-Type': 'text/plain'
+  });
+  res.write('Bad Request');
+  res.end();
 });
 
 const server = http.createServer(router.route());

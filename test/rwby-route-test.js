@@ -32,4 +32,16 @@ describe('RWBY Routes', function(){
       });
     });
   });
+  describe('Delete: /api/rwby', function(){
+    it('should delete an item', function(done){
+      request.delete(`localhost:3000/api/rwby?id=${rwby.id}`)
+      .end((err, res) =>{
+        expect(res.status).to.equal(204);
+        expect(res.body.id).to.equal(undefined);
+        expect(res.body.name).to.equal(undefined);
+        expect(res.body.weapon).to.equal(undefined);
+        done();
+      });
+    });
+  });
 });
