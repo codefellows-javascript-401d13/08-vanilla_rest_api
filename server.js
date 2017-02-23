@@ -35,6 +35,24 @@ router.get('/api/team', function(req, res) {
   res.end();
 });
 
+router.post('/api/team', function(req, res) {
+  try {
+    let team = new Team(req.body.name, req.body.content);
+    locker.addTeam('team', team);
+    res.writeHead(200, {
+      'Content-Type': 'application/json'
+    });
+    res.write(JSON.stringify(team));
+    res.end();
+  } catch (err) {
+    console.error(err);
+    res.writeHead(400, {
+      'Content-Type': 'text/plain'
+    });
+    res.write('bad request');
+    res.end();
+  }
+});
 
 const server = http.createServer(Router.route());
 
