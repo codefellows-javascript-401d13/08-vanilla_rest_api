@@ -46,4 +46,15 @@ describe('Cat Routes', function() {
       });
     });
   });
+
+  describe('GET: api/cat', function() {
+    it('should return all cats', function(done) {
+      request.get('localhost:3000/api/cat')
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+  });
 });

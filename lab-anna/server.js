@@ -27,14 +27,24 @@ router.get('/api/cat', function(req, res) {
       res.write('not found');
       res.end();
     });
-
-    return;
+  } else {
+    storage.returnAll()
+    .then( catIds => {
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      });
+      res.write(JSON.stringify(catIds));
+      res.end();
+    })
+    .catch( err => {
+      console.error(err);
+      res.writeHead(404, {
+        'Content-Type': 'text/plain'
+      });
+      res.write('not found');
+      res.end();
+    });
   };
-  res.writeHead(400, {
-    'Content-Type': 'text/plain'
-  });
-  res.write('bad request');
-  res.end();
 });
 
 router.post('/api/cat', function(req, res) {
