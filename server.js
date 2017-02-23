@@ -27,12 +27,23 @@ router.get('/api/team', function(req, res) {
     });
     return;
   }
-
-  res.writeHead(400, {
-    'Content-Type': 'text/plain'
+  locker.fetchAllTeams('team')
+  .then( teams => {
+    let teamstring = teams.join(', ');
+    res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+    res.write(teamstring);
+    res.end();
+  })
+  .catch( err => {
+    console.error(err);
+    res.writeHead(404, {
+      'Content-Type': 'text/plain'
+    });
+    res.write('schema not found');
+    res.end();
   });
-  res.write('bad request');
-  res.end();
 });
 
 router.post('/api/team', function(req, res) {
@@ -52,6 +63,24 @@ router.post('/api/team', function(req, res) {
     });
     res.write('bad request');
     res.end();
+  }
+});
+
+router.delete('/api/team', function(req, res) {
+  if(req.url.query.id) {
+    locker.removeTeam('team', req.url.query.id).
+    then( () => {
+      res.writeHead(204);
+      res.end();
+    })
+    .catch( err => {
+      console.error(err);
+      res.writeHead(400, {
+        'Text-Content': 'text/plain'
+      });
+      res.write('bad request');
+      res.end();
+    });
   }
 });
 

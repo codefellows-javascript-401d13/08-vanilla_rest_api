@@ -43,15 +43,35 @@ describe('Team Routes', function() {
         done();
       });
     });
-    it('should')
+    it('should return a 404 not found error', function(done) {
+      request.get('localhost:3000/api/team?id=12345')
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(404);
+        expect(res.text).to.equal('team not found');
+        done();
+      });
+    });
+    it('should return all team ids if no team specified', function(done) {
+      request.get('localhost:3000/api/team')
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.text).to.equal(`${team.id}`);
+        done();
+      });
+    });
   });
-  // it('should return 400 if no team specified', function(done) {
-  //   request.get('localhost:3000/api/team')
-  //   .end((err, res) => {
-  //     if (err) return done(err);
-  //     expect(res.status).to.equal(400);
-  //     expect(res.body).to.equal('bad request');
-  //     done();
-  //   });
-  // });
+
+  describe('DELETE :3000/api/team', function() {
+    it('Should remove an item and return an empty res obj', function(done) {
+      request.delete(`localhost:3000/api/team?${team.id}`)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(204);
+        expect(team).to.equal(null);
+        done();
+      });
+    });
+  });
 });
