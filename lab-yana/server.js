@@ -7,6 +7,27 @@ const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
 const router = new Router(); //instantiate a new Router obj
 
+router.delete('/api/blog', function(req, res) {
+  if(req.url.query.id) {
+    storage.deleteItem('blog', req.url.query.id)
+    .then( blog => {
+      res.writeHead(204, { 'Content-Type': 'application/json' } );
+      res.write('deleted this blog entry:', blog);
+      res.end();
+    })
+    .catch(err => {
+      console.error(err);
+      res.writeHead(404, { 'Content-Type': 'text/plain' } );
+      res.write('not found');
+      res.end();
+    });
+    return;
+  }
+  res.writeHead(400, { 'Content-Type': 'text/plain' } );
+  res.write('bad request');
+  res.end();
+});
+
 router.get('/api/blog', function(req, res) { //router.get is a prototype function of every Router object
   if (req.url.query.id) { //if the request contains an id
     storage.fetchItem('blog', req.url.query.id) //calls the fetchItem fx in storage module, passing it 'blog' string and the query id to retrieve the item from the storage object
@@ -42,6 +63,7 @@ router.post('/api/blog', function(req, res) {
     res.end();
   }
 });
+
 
 const server = http.createServer(router.route()); //route() parses the url and body of a request and calls the appropriate method (e.g., GET)
 
