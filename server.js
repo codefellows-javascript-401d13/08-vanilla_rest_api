@@ -68,8 +68,8 @@ router.post('/api/team', function(req, res) {
 
 router.delete('/api/team', function(req, res) {
   if(req.url.query.id) {
-    locker.removeTeam('team', req.url.query.id).
-    then( () => {
+    locker.removeTeam('team', req.url.query.id)
+    .then( () => {
       res.writeHead(204);
       res.end();
     })
@@ -81,6 +81,7 @@ router.delete('/api/team', function(req, res) {
       res.write('bad request');
       res.end();
     });
+    return;
   }
 });
 

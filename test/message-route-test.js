@@ -65,11 +65,10 @@ describe('Team Routes', function() {
 
   describe('DELETE :3000/api/team', function() {
     it('Should remove an item and return an empty res obj', function(done) {
-      request.delete(`localhost:3000/api/team?${team.id}`)
+      request.delete(`localhost:3000/api/team?id=${team.id}`)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(204);
-        expect(team).to.equal(null);
         done();
       });
     });
