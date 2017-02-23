@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function parseJSON(req) {
-  return new Promise((resolve, reject) => {
+module.exports = function(req) {
+  return new Promise( (resolve, reject) => {
     if (req.method === 'POST' || req.method === 'PUT') {
       let body = '';
 
@@ -23,6 +23,8 @@ module.exports = function parseJSON(req) {
         console.error(err);
         reject(err);
       });
+
+      return;
     }
     resolve();
   });

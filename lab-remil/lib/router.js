@@ -28,12 +28,10 @@ Router.prototype.delete = function(endpoint, callback) {
   this.routes.DELETE[endpoint] = callback;
 };
 
-Router.prototype.route = function route() {
+Router.prototype.route = function() {
   return (req, res) => {
-    console.log('pre promise body', req.body);
-    Promise.all( [parseUrl(req),parseJSON(req)] )
+    Promise.all( [ parseUrl(req), parseJSON(req) ] )
     .then( () => {
-      console.log('promise all req', req.body);
       if (typeof this.routes[req.method][req.url.pathname] === 'function') {
         this.routes[req.method][req.url.pathname](req, res);
         return;

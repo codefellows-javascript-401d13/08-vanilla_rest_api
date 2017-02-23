@@ -1,7 +1,8 @@
 'use strict';
 
 const http = require('http');
-const PORT = process.env.PORT | 3000;
+const PORT = 3000;
+// const PORT = process.env.PORT | 3000;
 const Router = require('./lib/router.js');
 const router = new Router();
 const Sneaker = require('./model/sneaker.js');
@@ -9,7 +10,6 @@ const storage = require('./lib/storage.js');
 
 router.post('/api/sneaker', function(req, res) {
   try {
-    console.log('post route req', req.body);
     var sneaker = new Sneaker(req.body.model, req.body.brand);
     storage.createItem('sneaker', sneaker);
     res.writeHead(200, {
@@ -27,6 +27,7 @@ router.post('/api/sneaker', function(req, res) {
   }
 });
 
+
 const server = http.createServer(router.route());
 
-server.listen(PORT, () => console.log('Servin\' it up on: ', PORT));
+server.listen(PORT, () => { console.log('Servin\' it up on: ', PORT); });
