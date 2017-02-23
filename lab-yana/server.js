@@ -2,9 +2,9 @@
 
 const PORT = 3002;
 const http = require('http');
-const Picture = require('./model/blog-entry.js');
-const storage = require('./lib/storage.js');
+const Blog = require('./model/blog-entry.js');
 const Router = require('./lib/router.js');
+const storage = require('./lib/storage.js');
 const router = new Router(); //instantiate a new Router obj
 
 router.get('/api/blog', function(req, res) { //router.get is a prototype function of every Router object
@@ -18,7 +18,7 @@ router.get('/api/blog', function(req, res) { //router.get is a prototype functio
     .catch(err => { //if Promise was rejected
       console.error(err);
       res.writeHead(404, { 'Content-Type': 'text/plain' } );
-      res.write(JSON.stringify(blog)); //why do we still stringify?
+      res.write('not found');
       res.end();
     });
     return; //make sure you exit function if you're in the if so the code below doesn't run
@@ -30,10 +30,10 @@ router.get('/api/blog', function(req, res) { //router.get is a prototype functio
 
 router.post('/api/blog', function(req, res) {
   try {
-    let entry = new Blog(req.body.name, req.body.content); //creates new Blog object, passing in the name and content (blog entry)
-    storage.createItem('blog', entry); //fx that puts the blog entry into storage object
+    var blog = new Blog(req.body.name, req.body.content); //creates new Blog object, passing in the name and content (blog entry)
+    storage.createItem('blog', blog); //fx that puts the blog entry into storage object
     res.writeHead(200, { 'Content-Type': 'application/json' } );
-    res.write(JSON.stringify(entry));
+    res.write(JSON.stringify(blog));
     res.end();
   } catch (err) {
     console.error(err);
@@ -45,4 +45,4 @@ router.post('/api/blog', function(req, res) {
 
 const server = http.createServer(router.route()); //route() parses the url and body of a request and calls the appropriate method (e.g., GET)
 
-server.listen(PORT, () => { console.log('server up', PORT) } );
+server.listen(PORT, () => { console.log('server up', PORT); } );

@@ -24,4 +24,4 @@ module.exports = function(req) { //this takes a request object since that is whe
     }
     resolve(); //just in case we somehow end up in this function and we don't enter if statement
   });
-}
+};
