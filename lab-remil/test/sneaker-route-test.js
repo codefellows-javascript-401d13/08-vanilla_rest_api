@@ -4,8 +4,7 @@ const request = require('superagent');
 const expect = require('chai').expect;
 
 require('../server.js');
-const PORT = 3000;
-// const PORT = process.env.PORT | 3000;
+const PORT = process.env.PORT | 3000;
 
 describe('Sneaker Routes', function() {
   let sneaker = null;
@@ -20,6 +19,19 @@ describe('Sneaker Routes', function() {
         expect(res.body.model).to.equal('Air Test 90');
         expect(res.body.brand).to.equal('Testo');
         sneaker = res.body;
+        done();
+      });
+    });
+  });
+
+  describe('GET: /api/note', function() {
+    it('should return a note', function(done) {
+      request.get(`localhost:${PORT}/api/sneaker?id=${sneaker.id}`)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.model).to.equal('Air Test 90');
+        expect(res.body.brand).to.equal('Testo');
         done();
       });
     });
