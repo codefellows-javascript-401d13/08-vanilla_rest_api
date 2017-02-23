@@ -37,4 +37,18 @@ describe('Blog Routes', function() {
       });
     });
   });
+  describe('DELETE: /api/blog', function() {
+    it('should delete a blog entry', function(done) {
+      request.delete(`localhost:3002/api/blog?id=${blog.id}`)
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(204);
+        expect(res.body).to.be.empty;
+        blog = res.body;
+        console.log('after delete: ', blog);
+        done();
+      });
+    });
+  });
 });

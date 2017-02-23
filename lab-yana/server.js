@@ -10,9 +10,8 @@ const router = new Router(); //instantiate a new Router obj
 router.delete('/api/blog', function(req, res) {
   if(req.url.query.id) {
     storage.deleteItem('blog', req.url.query.id)
-    .then( blog => {
-      res.writeHead(204, { 'Content-Type': 'application/json' } );
-      res.write('deleted this blog entry:', blog);
+    .then( () => {
+      res.writeHead(204);
       res.end();
     })
     .catch(err => {

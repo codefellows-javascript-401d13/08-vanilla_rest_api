@@ -44,7 +44,7 @@ Router.prototype.route = function() { //takes the appropriate path
       res.write('route not found'); //tell user what is wrong
       res.end(); //end response
     })
-    .catch( err => { //if there is an error with the parsing
+    .catch(err => { //if there is an error with the parsing
       console.error(err);
       res.writeHead(400, { 'Content-Type': 'text/plain' } );
       res.write('bad request');

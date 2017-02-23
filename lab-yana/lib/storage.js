@@ -32,7 +32,7 @@ exports.deleteItem = function(schemaName, id) {
     if (!schema) return reject(new Error('schema not found'));
     var item = schema[id];
     if (!item) return reject(new Error('schema not found'));
-    storage[schemaName][item.id] = null;
-    resolve(item);
+    delete storage[schemaName][item.id];
+    if (!storage[schemaName][item.id]) resolve();
   });
 };
