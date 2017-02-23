@@ -9,9 +9,6 @@ const storage = require('./lib/storage.js');
 
 const server = http.createServer(router.route());
 
-server.listen(PORT, () => {
-  console.log('Server up:', PORT);
-});
 
 router.get('/api/guitar', function(req, res) {
   if(req.url.query.id) {
@@ -24,11 +21,12 @@ router.get('/api/guitar', function(req, res) {
       res.end();
     })
     .catch( err => {
-      console.error(err);
+      console.error('we got here:', err);
       res.writeHead(404, {
         'Content-Type': 'text/plain'
       });
       res.write('not found');
+      console.log('here\'s the response:', res);
       res.end();
     });
     return;
@@ -85,4 +83,8 @@ router.delete('/api/guitar', function(req, res) {
   });
   res.write('bad request');
   res.end();
+});
+
+server.listen(PORT, () => {
+  console.log('Server up:', PORT);
 });

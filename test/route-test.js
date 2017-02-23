@@ -13,7 +13,7 @@ describe('Vanilla API Routes', function() {
       request.post('localhost:3000/api/guitar')
       .send({ name: 'test guitar', type: 'test type', make: 'test make'})
       .end((err, res) => {
-        if(err) return(err);
+        if(err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('test guitar');
         expect(res.body.type).to.equal('test type');
@@ -28,7 +28,7 @@ describe('Vanilla API Routes', function() {
     it('should return a guitar', function(done) {
       request.get(`localhost:3000/api/guitar?id=${guitar.id}`)
       .end((err, res) => {
-        if(err) return(err);
+        if(err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('test guitar');
         expect(res.body.type).to.equal('test type');
@@ -39,9 +39,10 @@ describe('Vanilla API Routes', function() {
     it('should result in a 404 error', function(done) {
       request.get('localhost:3000/api/guitar?id=dumb-ass-test')
       .end((err, res) => {
-        if(err) return(err);
+        // if(err) return done(err);
+        console.log('response status:', res.status);
         expect(res.status).to.equal(404);
-        // expect(res.body).to.equal('not found');
+        expect(res.statusMessage).to.equal('not found');
         done();
       });
     });
