@@ -12,26 +12,28 @@ const Router = module.exports = function Router() {
   };
 };
 
-Router.prototype.get = function routerGET(endpoint, callback) {
+Router.prototype.get = function(endpoint, callback) {
   this.routes.GET[endpoint] = callback;
 };
 
-Router.prototype.post = function routerPOST(endpoint, callback) {
+Router.prototype.post = function(endpoint, callback) {
   this.routes.POST[endpoint] = callback;
 };
 
-Router.prototype.put = function routerPUT(endpoint, callback) {
+Router.prototype.put = function(endpoint, callback) {
   this.routes.PUT[endpoint] = callback;
 };
 
-Router.prototype.delete = function routerDELETE(endpoint, callback) {
+Router.prototype.delete = function(endpoint, callback) {
   this.routes.DELETE[endpoint] = callback;
 };
 
-Router.prototype.route = function route(req, res) {
+Router.prototype.route = function route() {
   return (req, res) => {
+    console.log('pre promise body', req.body);
     Promise.all( [parseUrl(req),parseJSON(req)] )
     .then( () => {
+      console.log('promise all req', req.body);
       if (typeof this.routes[req.method][req.url.pathname] === 'function') {
         this.routes[req.method][req.url.pathname](req, res);
         return;

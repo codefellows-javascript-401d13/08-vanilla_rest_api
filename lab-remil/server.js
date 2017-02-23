@@ -4,12 +4,28 @@ const http = require('http');
 const PORT = process.env.PORT | 3000;
 const Router = require('./lib/router.js');
 const router = new Router();
+const Sneaker = require('./model/sneaker.js');
+const storage = require('./lib/storage.js');
 
-router.get('/sup', function(req, res) {
-  console.log(req);
-  res.write('sup');
-  res.end();
-})
+router.post('/api/sneaker', function(req, res) {
+  try {
+    console.log('post route req', req.body);
+    var sneaker = new Sneaker(req.body.model, req.body.brand);
+    storage.createItem('sneaker', sneaker);
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+    });
+    res.write(JSON.stringify(sneaker));
+    res.end();
+  } catch(err) {
+    console.error(err);
+    res.writeHead(400, {
+      'Content-Type': 'text/plain',
+    });
+    res.write('bad request');
+    res.end();
+  }
+});
 
 const server = http.createServer(router.route());
 
