@@ -38,7 +38,7 @@ router.get('/api/memo', function(req, res) {
 
 router.post('/api/memo', function(req, res) {
   try {
-    var memo = new Memo(req.body.name, req.body.content);
+    var memo = new Memo(req.body.author, req.body.entry);
     storage.createItem('memo', memo);
     res.writeHead(200, {
       'Content-Type': 'application/json'
