@@ -37,7 +37,8 @@ router.get('/api/team', function(req, res) {
 
 router.post('/api/team', function(req, res) {
   try {
-    let team = new Team(req.body.name, req.body.content);
+    console.log(req.body.name, req.body.city);
+    var team = new Team(req.body.name, req.body.city);
     locker.addTeam('team', team);
     res.writeHead(200, {
       'Content-Type': 'application/json'
@@ -54,7 +55,7 @@ router.post('/api/team', function(req, res) {
   }
 });
 
-const server = http.createServer(Router.route());
+const server = http.createServer(router.route());
 
 server.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}`);

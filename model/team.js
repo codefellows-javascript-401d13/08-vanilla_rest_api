@@ -2,7 +2,7 @@
 
 const uuid = require('node-uuid');
 
-module.exports = function Team(name, city) {
+module.exports = function(name, city) {
   if (!name) throw new Error('expected name');
   if (!city) throw new Error('expected city');
 
