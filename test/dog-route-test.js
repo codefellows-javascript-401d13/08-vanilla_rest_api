@@ -1,94 +1,38 @@
 'use strict';
 
-const http = require('http');
-const Dog = require('./model/dog.js');
-const Router = require('./lib/router.js');
-const storage = require('./lib/storage.js');
-const PORT = process.env.PORT || 3000;
-const router = new Router();
+const request = require('superagent');
+const expect = require('chai').expect;
 
-router.get('/api/dog', function(req,res){
-  if(req.url.query.id){
-    storage.fetchItem('dog', req.url.query.id)
-    .then( dog => {
-      res.writeHead(200, {
-        'Content-Type': 'application/json'
+require('../server.js');
+
+describe('Dog Routes', function() {
+  var dog = null;
+  describe('POST: /api/dog', function() {
+    it('should return a dog', function(done) {
+      request.post('localhost:8000/api/dog')
+      .send({ name: 'testname', breed: 'testcontent' })
+      .end((err, res) => {
+        if (err) console.log('nope');
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.name).to.equal('test name');
+        expect(res.body.content).to.equal('test breed');
+        dog = res.body;
+        done();
       });
-      res.write(JSON.stringify(dog));
-      res.end();
-    })
-    .catch(err => {
-      console.error(err);
-      res.writeHead(404, {
-        'Content-Type':'text/plain'
+    });
+  });
+
+  describe('GET: /api/dog', function() {
+    it('should return a dog', function(done) {
+      request.get(`localhost:8000/api/dog?id=${dog.id}`)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.name).to.equal('test name');
+        expect(res.body.content).to.equal('test breed');
+        done();
       });
-      res.write('not found');
-      res.end();
     });
-    return;
-  };
-
-  res.writeHead(400, {
-  'Content-Type': 'text/plain'
-});
-res.write('BAD REQUEST USING THE ' + req.method + ' method');
-res.end();
-});
-
-router.post('/api/dog', function(req,res){
-  try {
-    console.log('request body: ', req.body);
-    var dog = new Dog(req.body.name, req.body.breed);
-    storage.createItem('dog', dog);
-    res.writeHead(200, {
-      'Content-Type': 'application/json'
-    });
-    res.write(JSON.stringify(dog));
-    res.write('\nYou used the ' + req.method + ' method.');
-    res.end();
-  } catch (err) {
-    console.error(err);
-    res.writeHead(400, {
-      'Content-Type': 'text/plain'
-    });
-    res.write('bad request');
-    res.end();
-  };
-});
-
-router.delete('/api/dog', function(req,res){
-  if(req.url.query.id){
-    console.log('here is your query string id:', req.url.query.id);
-    storage.deleteItem('dog', req.url.query.id)
-    .then( dog => {
-      res.writeHead(204, {
-        'Content-Type': 'application/json'
-      });
-      res.write(JSON.stringify(dog));
-      res.end();
-    })
-    .catch(err => {
-      console.error(err);
-      res.writeHead(404, {
-        'Content-Type':'text/plain'
-      });
-      res.write('not found');
-      res.end();
-    });
-    return;
-  };
-
-  res.writeHead(400, {
-  'Content-Type': 'text/plain'
-});
-res.write('BAD REQUEST USING THE ' + req.method + ' method');
-res.end();
-});
-////////
-
-const server = http.createServer(router.route());
-
-
-server.listen(PORT, () => {
-  console.log('server up on:', PORT);
+  });
 });
