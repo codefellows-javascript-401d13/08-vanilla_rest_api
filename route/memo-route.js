@@ -15,18 +15,18 @@ module.exports = function(router) {
               response.sendText(res, 404, 'not found');
             });
       return;
-    };
+    }
     response.sendText(res, 400, 'bad request');
   });
 
   router.post('/api/memo', function(req, res) {
-      try{
-          var memo = new Memo( req.body.author, req.body.entry);
-          storage.createItem('memo', memo);
-          response.sendJSON(res, 200, memo);
-      } catch (err) {
-          console.error(err)
-          response.sendText(res, 400, 'bad request');
-      }
+    try{
+      var memo = new Memo( req.body.author, req.body.entry);
+      storage.createItem('memo', memo);
+      response.sendJSON(res, 200, memo);
+    } catch (err) {
+      console.error(err);
+      response.sendText(res, 400, 'bad request');
+    }
   });
 };
