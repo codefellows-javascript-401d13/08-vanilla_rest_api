@@ -23,6 +23,19 @@ describe('Cat Routes', function() {
     });
   });
 
+  describe('POST: /api/cat', function() {
+    it('should return a cat', function(done) {
+      request.post('localhost:8000/api/cat')
+      .send({})
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(400);
+        cat = res.body;
+        done();
+      });
+    });
+  });
+
   describe('GET api/cat', function() {
     it('should return a cat', function(done {
       request.get(`localhost:8000/api/cat?id=${cat.id}`)
@@ -31,6 +44,28 @@ describe('Cat Routes', function() {
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('test name');
         expect(res.body.content).to.equal('test content');
+        done();
+      });
+    });
+  });
+
+  describe('GET api/cat', function() {
+    it('should return a cat', function(done {
+      request.get(`localhost:8000/api/cat`)
+      .end((err, res) => {
+        if (err) return done (err);
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+  });
+
+  describe('GET api/cat', function() {
+    it('should return a cat', function(done {
+      request.get(`localhost:8000/api/cat?id=${dog.id}`)
+      .end((err, res) => {
+        if (err) return done (err);
+        expect(res.status).to.equal(404);
         done();
       });
     });

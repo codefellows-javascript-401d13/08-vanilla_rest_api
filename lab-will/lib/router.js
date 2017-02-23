@@ -52,7 +52,7 @@ Router.prototype.route = function () {
     .catch( err => {
       console.error(error);
 
-      res.writeHead(40 {
+      res.writeHead(400 {
         'Content-Type': 'text/plain'
       });
 
