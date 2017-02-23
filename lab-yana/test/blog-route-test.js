@@ -86,15 +86,45 @@ describe('Blog Routes', function() {
         done();
       });
     });
-    it('should return a 400 bad request', function(done) {
-      request.get('localhost:3002/api/blog')
+    it('should return a list of stored blog entry IDs', function(done) {
+      var list = []; //array to store list of test IDs
+      list.push(blog.id); //put the thing we stored from the initial POST above
+      request.post('localhost:3002/api/blog')
       .send( { name: 'test name', content: 'test content' } )
       .end((err, res) => {
-        expect(err).to.be.an('error');
-        expect(res.status).to.equal(400);
+        if (err) return done(err);
+        list.push(res.body.id);
+      });
+      request.post('localhost:3002/api/blog')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        if (err) return done(err);
+        list.push(res.body.id);
+      });
+      request.post('localhost:3002/api/blog')
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        if (err) return done(err);
+        list.push(res.body.id);
+      });
+      request.get('localhost:3002/api/blog')
+      .send( { name: 'test name', content: 'test conteent' } )
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.text).to.equal(JSON.stringify(list));
         done();
       });
     });
+    // it('should return a 400 bad request', function(done) {
+    //   request.get('localhost:3002/api/blog')
+    //   .send( { name: 'test name', content: 'test content' } )
+    //   .end((err, res) => {
+    //     expect(err).to.be.an('error');
+    //     expect(res.status).to.equal(400);
+    //     done();
+    //   });
+    // });
   });
   describe('DELETE: /api/blog', function() {
     it('should delete a blog entry', function(done) {

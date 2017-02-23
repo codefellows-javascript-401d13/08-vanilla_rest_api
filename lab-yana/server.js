@@ -30,7 +30,7 @@ router.delete('/api/blog', function(req, res) {
 router.get('/api/blog', function(req, res) { //router.get is a prototype function of every Router object
   if (req.url.query.id) { //if the request contains an id
     storage.fetchItem('blog', req.url.query.id) //calls the fetchItem fx in storage module, passing it 'blog' string and the query id to retrieve the item from the storage object
-    .then( blog => { //after above is done, call a function that passes in "blog", which is the fulfilled Promise object from fetchItem
+    .then(blog => { //after above is done, call a function that passes in "blog", which is the fulfilled Promise object from fetchItem
       res.writeHead(200, { 'Content-Type': 'application/json' } ); //type is app/json because you are writing the JSON from the req
       res.write(JSON.stringify(blog)); //write the info fetched from storage in the response
       res.end();
@@ -43,9 +43,21 @@ router.get('/api/blog', function(req, res) { //router.get is a prototype functio
     });
     return; //make sure you exit function if you're in the if so the code below doesn't run
   }
-  res.writeHead(400, { 'Content-Type': 'text/plain' } ); //if there is no id, run this because you're trying to GET something that is not in storage
-  res.write('bad request');
-  res.end();
+  storage.fetchList('blog') //if no id provided for GET request, fetch list of IDs of stored blog entries
+    .then(blog => {
+      res.writeHead(200, { 'Content-Type': 'application/json' } );
+      res.write(JSON.stringify(blog));
+      res.end();
+    })
+    .catch(err => {
+      console.error(err);
+      res.writeHead(404, { 'Content-Type': 'text/plain' } );
+      res.write('not found');
+      res.end();
+    });
+  // res.writeHead(400, { 'Content-Type': 'text/plain' } ); //if there is no id, run this because you're trying to GET something that is not in storage
+  // res.write('bad request');
+  // res.end();
 });
 
 router.post('/api/blog', function(req, res) {

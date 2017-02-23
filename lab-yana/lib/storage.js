@@ -36,3 +36,13 @@ exports.deleteItem = function(schemaName, id) {
     if (!storage[schemaName][item.id]) resolve();
   });
 };
+
+exports.fetchList = function(schemaName) {
+  return new Promise((resolve, reject) => {
+    if (!schemaName) return reject(new Error('expected schema name'));
+    var list = [];
+    for (var key in storage[schemaName]) { list.push(key); }
+    if (list.length === 0) return resolve('no blog entries available');
+    resolve(list);
+  });
+};
