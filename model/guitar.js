@@ -2,11 +2,13 @@
 
 const uuid = require('node-uuid');
 
-module.exports = function(name, content) {
+module.exports = function(name, type, make) {
   if(!name) throw new Error('name not provided');
-  if(!content) throw new Error('no content provided');
+  if(!type) throw new Error('no type provided');
+  if(!make) throw new Error('no make provided');
 
   this.name = name;
   this.id = uuid.v1();
-  this.content = content;
+  this.type = type;
+  this.make = make;
 };
