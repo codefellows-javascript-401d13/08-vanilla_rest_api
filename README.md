@@ -17,7 +17,7 @@
   * `gulpfile.js`
   * `README.md`
 
-## Description
+<!-- ## Description
 * Create the following directories to organize your code:
   * `lib`
   * `model`
@@ -29,14 +29,14 @@
 * Create a custom body parser module that uses promises to parse the JSON body of `POST` and `PUT` requests
 * Create a custom url parser module that returns a promise and uses the NodeJS `url` and `querystring` modules to parse the request url
 * Create a router constructor that handles requests to `GET`, `POST`, `PUT`, and `DELETE` requests
-* Create a storage module that will store resources by their schema type (ex: note) and id
+* Create a storage module that will store resources by their schema type (ex: note) and id -->
 
-## Server Endpoints
+<!-- ## Server Endpoints
 ### `/api/simple-resource-name`
 * `POST` request
  * pass data as stringifed JSON in the body of a **POST** request to create a new resource
 * `GET` request
- * pass `?id=<uuid>` as a query string parameter to retrieve a specific resource (as JSON)
+ * pass `?id=<uuid>` as a query string parameter to retrieve a specific resource (as JSON) -->
 * `DELETE` request
  * pass `?id=<uuid>` in the query string to **DELETE** a specific resource
  * this should return a 204 status code with no content in the body
