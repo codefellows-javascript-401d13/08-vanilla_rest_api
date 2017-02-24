@@ -20,12 +20,12 @@ module.exports = function(router) {
     response.sendText(res, 400, 'bad request');
   });
 
-  router.post('/api/note', function(req, res) {
+  router.post('/api/movie', function(req, res) {
     try {
       var movie = new Movie(req.body.name, req.body.director);
       storage.createItem('movie', movie);
       response.sendJSON(res, 200, movie);
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       response.sendText(res, 400, 'bad request');
     }
