@@ -7,15 +7,15 @@ const Note = require('../model/note.js');
 module.exports = function(router) {
   router.get('/api/note', function(req, res) {
     if (req.url.query.id) {
-      storage.fetchItem('note', req.url.query.ie)
+      storage.fetchItem('note', req.url.query.id)
       .then( note => {
-        console.log('word!');
+
         response.sendJSON(res, 200, note);
       })
       .catch( err => {
-        console.log('nah');
+        
         console.error(err);
-        response.sentText(res, 404, 'not found');
+        response.sendText(res, 404, 'not found');
       });
 
       return;

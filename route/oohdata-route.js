@@ -5,16 +5,17 @@ const response = require('../lib/response.js');
 const Oohdata = require('../model/oohdata.js');
 
 module.exports = function(router) {
-  router.get('api/oohdata', function(req, res) {
+  router.get('/api/oohdata', function(req, res) {
+
     if (req.url.query.id) {
       storage.fetchItem('oohdata', req.url.query.id)
       .then( oohdata => {
-        console.log('got it');
+
         response.sendJSON(res, 200, oohdata);
       })
       .catch( err => {
-        console.log('nope');
-        console.error(err);
+
+        
         response.sendText(res, 404, 'not found');
       });
 
