@@ -7,12 +7,12 @@ const storage = require('./lib/storage.js');
 const PORT = process.env.PORT || 3000;
 const router = new Router();
 
-router.get = ('/api/cat', function(req, res) {
+router.get('/api/cat', function(req, res) {
   if (req.url.query.id) {
     storage.fetchItem('cat', req.url.query.id)
     .then( cat => {
       res.writeHead(200, {
-        'Content-Type'; 'application/json'
+        'Content-Type': 'application/json'
       });
       res.write(JSON.stringify(cat));
       res.end();
@@ -20,7 +20,7 @@ router.get = ('/api/cat', function(req, res) {
     .catch( err => {
       console.error(err);
       res.writeHead(404, {
-        'Content-Type'; 'text/plain;'
+        'Content-Type': 'text/plain;'
       });
       res.write('not found');
       res.end();
@@ -41,14 +41,14 @@ router.post('/api/cat', function(req, res) {
     var cat = new Cat(req.body.name, req.body.content);
     storage.createItem('cat', cat);
     res.writeHead(200, {
-      'Content-Type'; 'application/json'
+      'Content-Type': 'application/json'
     });
     res.write(JSON.stringify(cat));
     res.end();
-  } catch{
+  } catch(err) {
     console.error(err);
     res.writeHead(400, {
-      'Content-Type', 'text/plain'
+      'Content-Type': 'text/plain'
     });
     res.write('bad request');
     re.end();
@@ -60,7 +60,7 @@ router.delete('/api/cat', function(req, res) {
     storage.deleteItem('cat', req.url.query.id)
     .then( cat => {
       res.writeHead(200, {
-        'Content-Type'; 'application/json'
+        'Content-Type': 'application/json'
       });
       res.write(JSON.stringify(cat));
       res.end();
@@ -68,7 +68,7 @@ router.delete('/api/cat', function(req, res) {
     .catch( err => {
       console.error(err);
       res.writeHead(404, {
-        'Content-Type'; 'text/plain;'
+        'Content-Type': 'text/plain;'
       });
       res.write('not found');
       res.end();

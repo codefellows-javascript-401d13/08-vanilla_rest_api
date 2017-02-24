@@ -5,7 +5,7 @@ const storage = {};
 module.exports = exports = {};
 
 exports.createItem = function (schemaName, item) {
-  if (!schemaName) return Promise.reject(nee Error('expected schemaName'));
+  if (!schemaName) return Promise.reject(new Error('expected schemaName'));
   if (!item) return Promise.reject(new Error('expecteditem'));
   if (!storage[schemaName]) storage[schemaName] = {};
 
@@ -15,6 +15,8 @@ exports.createItem = function (schemaName, item) {
 };
 
 exports.fetchItem = function (schemaName, id ) {
+  // console.log('id', id);
+  // console.log('schemaName', schemaName);
   return new Promise(function(resolve, reject) {
     if (!schemaName) return reject(new Error('expected schemaName'));
     if (!id) return reject(new Error('expected id'));
@@ -41,9 +43,9 @@ exports.deleteItem = function (schemaName) {
     var item = schema[id];
     if (!item) return reject(new Error('item not found'));
 
-    delete item;
+    // delete item;
 
-    delete schema;
+    delete torage[schemaName];
 
     resolve(item);
   });

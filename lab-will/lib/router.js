@@ -12,6 +12,10 @@ const Router = module.exports = function() {
   };
 };
 
+// Router.prototype.get = function (endpoint, callback) {
+//   this.routes.GET[endpoint] = callback;
+// };
+
 Router.prototype.get = function (endpoint, callback) {
   this.routes.GET[endpoint] = callback;
 };
@@ -52,7 +56,7 @@ Router.prototype.route = function () {
     .catch( err => {
       console.error(error);
 
-      res.writeHead(400 {
+      res.writeHead(400, {
         'Content-Type': 'text/plain'
       });
 
