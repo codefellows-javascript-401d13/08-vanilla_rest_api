@@ -24,13 +24,12 @@ describe('My Data Routes', function(){
   });
 
   describe('POST: api/mine', function() {
-    it('it should return a 400 error', function(done){
+    it('it should return a bad request', function(done){
       request.post('localhost:3000/api/mine')
-      .send({ fruit: 'pear'})
+      .send({})
       .end((res) => {
-        console.log(res.text);
         expect(res.status).to.equal(400);
-        // expect(res.body).to.equal('bad request');
+        // expect(res.text).to.equal('bad request');
         done();
       });
     });
@@ -41,6 +40,7 @@ describe('My Data Routes', function(){
     it('should return mine', function(done){
       request.get(`localhost:3000/api/mine?id=${mine.id}`)
       .end((err, res) => {
+        if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.fruit).to.equal('test fruit');
         expect(res.body.apple).to.equal('test apple');
@@ -54,7 +54,8 @@ describe('My Data Routes', function(){
       request.get('localhost:3000/api/mine')
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        // expect(res.body).to.equal('bad request');
+        // expect(err).to.equal.null;
+        // expect(res.text).to.equal('bad request');
         done();
       });
     });
