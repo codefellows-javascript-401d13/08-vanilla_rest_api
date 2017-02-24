@@ -38,6 +38,7 @@ router.get('/api/cat', function(req, res) {
 
 router.post('/api/cat', function(req, res) {
   try{
+    console.log(req.body);
     var cat = new Cat(req.body.name, req.body.content);
     storage.createItem('cat', cat);
     res.writeHead(200, {
