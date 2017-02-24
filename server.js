@@ -18,7 +18,7 @@ router.get('/api/dog', function(req,res){
       res.end();
     })
     .catch(err => {
-      console.error(err);
+      // console.error(err);
       res.writeHead(404, {
         'Content-Type':'text/plain'
       });
@@ -27,7 +27,6 @@ router.get('/api/dog', function(req,res){
     });
     return;
   }
-
   res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
@@ -47,7 +46,7 @@ router.post('/api/dog', function(req,res){
     // res.write('\nYou used the ' + req.method + ' method.');
     res.end();
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     res.writeHead(400, {
       'Content-Type': 'text/plain'
     });
