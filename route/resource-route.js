@@ -12,7 +12,7 @@ module.exports = function(router){
         response.sendJSON(res, 200, dog);
       })
       .catch( err => {
-        response.sendDog(res, 404, 'not found');
+        response.sendJSON(res, 404, 'not found');
       });
       return;
     }
@@ -25,8 +25,11 @@ module.exports = function(router){
       storage.createDog('dog', dog);
       response.sendJSON(res, 200, dog);
     } catch (err) {
-      console.error(err);
-      response.sendText(res, 400, 'bad request');
+      // commenting out for improved readability in mocha
+      //console.error(err);
+      response.sendText(res, 400, 'bad request dude');
+      // response.sendJSON(res, 400, 'bad request dude');
+
     }
   });
 };
