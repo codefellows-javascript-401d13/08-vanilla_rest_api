@@ -26,13 +26,13 @@ router.get('/api/dog', function(req,res){
       res.end();
     });
     return;
-  };
+  }
 
   res.writeHead(400, {
-  'Content-Type': 'text/plain'
-});
-res.write('BAD REQUEST USING THE ' + req.method + ' method');
-res.end();
+    'Content-Type': 'text/plain'
+  });
+  res.write('BAD REQUEST USING THE ' + req.method + ' method');
+  res.end();
 });
 
 router.post('/api/dog', function(req,res){
@@ -53,7 +53,7 @@ router.post('/api/dog', function(req,res){
     });
     res.write('bad request');
     res.end();
-  };
+  }
 });
 
 router.delete('/api/dog', function(req,res){
@@ -76,13 +76,13 @@ router.delete('/api/dog', function(req,res){
       res.end();
     });
     return;
-  };
+  }
 
   res.writeHead(400, {
-  'Content-Type': 'text/plain'
-});
-res.write('BAD REQUEST USING THE ' + req.method + ' method');
-res.end();
+    'Content-Type': 'text/plain'
+  });
+  res.write('BAD REQUEST USING THE ' + req.method + ' method');
+  res.end();
 });
 ////////
 
