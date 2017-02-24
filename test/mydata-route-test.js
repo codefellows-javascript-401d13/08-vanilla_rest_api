@@ -73,10 +73,12 @@ describe('My Data Routes', function(){
 
   describe('DELETE: /api/mine', function(){
     it('should remove the id', function(done) {
-      request.delete(`localhost:3000/api/mine?id${mine.id}`)
+      request.delete(`localhost:3000/api/mine?id=${mine.id}`)
       .end((err, res) => {
+        if (err) return done(err);
         expect(res.status).to.equal(204);
-        expect(res.body).to.equal('undefined');
+        expect(res.body).to.equal('empty');
+        mine = res.body;
         done();
       });
     });
