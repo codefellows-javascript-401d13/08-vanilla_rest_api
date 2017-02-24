@@ -1,0 +1,21 @@
+{
+  "name": "lab-anna",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "chai": "^3.5.0",
+    "node-uuid": "^1.4.7",
+    "superagent": "^3.4.4"
+  }
+}
