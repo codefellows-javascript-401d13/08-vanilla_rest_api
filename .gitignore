@@ -10,7 +10,7 @@ yarn-debug.log*
 yarn-error.log*
 
 #Test-Data
-data/
+
 
 # Runtime data
 pids
