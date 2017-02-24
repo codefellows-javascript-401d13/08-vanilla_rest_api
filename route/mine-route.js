@@ -32,9 +32,9 @@ module.exports = function(router) {
   router.delete('/api/mine', function(req, res) {
     console.log('testing here', req.url.query.id);
     if(req.url.query.id){
+      console.log('testing shit here', res.status);
       storage.deleteItem('mine', req.url.query.id)
       .then( () => {
-        console.log('hi there');
         response.sendJSON(res, 204, 'no content');
       })
       .catch( err => {

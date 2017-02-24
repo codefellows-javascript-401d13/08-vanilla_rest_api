@@ -12,7 +12,6 @@ describe('My Data Routes', function(){
     it('it should return mine', function(done){
       request.post('localhost:3000/api/mine')
       .send({ fruit: 'test fruit', apple: 'test apple' })
-      console.log('mine here', mine);
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(200);
@@ -45,8 +44,8 @@ describe('My Data Routes', function(){
         expect(res.status).to.equal(200);
         expect(res.body.fruit).to.equal('test fruit');
         expect(res.body.apple).to.equal('test apple');
+        done();
       });
-      done();
     });
   });
 
@@ -54,7 +53,6 @@ describe('My Data Routes', function(){
     it('should return a 400 error if no id was provided', function(done){
       request.get('localhost:3000/api/mine')
       .end((err, res) => {
-        console.log('my response', res);
         expect(res.status).to.equal(400);
         // expect(res.body).to.equal('bad request');
         done();
@@ -67,7 +65,7 @@ describe('My Data Routes', function(){
       request.get('localhost:3000/api/mine?id=123')
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        // expect(res.text).to.equal('not found');
+        expect(res.text).to.equal('not found');
         done();
       });
     });
@@ -78,7 +76,7 @@ describe('My Data Routes', function(){
       request.delete(`localhost:3000/api/mine?id${mine.id}`)
       .end((err, res) => {
         expect(res.status).to.equal(204);
-        // expect(res.body).to.equal('undefined');
+        expect(res.body).to.equal('undefined');
         done();
       });
     });
