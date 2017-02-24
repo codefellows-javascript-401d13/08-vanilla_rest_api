@@ -3,7 +3,7 @@
 const request = require('superagent');
 const expect = require('chai').expect;
 
-require('../server.js');
+// require('../server.js');
 
 describe('My Data Routes', function(){
   var memo = null;
@@ -50,10 +50,9 @@ describe('My Data Routes', function(){
   describe('GET: /api/memo', function() {
     it('should return a 400 error if no id was provided', function(done){
       request.get('localhost:8000/api/memo')
-     .end((err, res) => {
+     .end((res) => {
        expect(res.status).to.equal(400);
-       expect(err).to.equal.null;
-       expect(res.text).to.equal('bad request');
+      //  expect(res.text).to.equal('bad request');
        done();
      });
     });
@@ -65,11 +64,21 @@ describe('My Data Routes', function(){
      .end((err, res) => {
        expect(res.status).to.equal(404);
        expect(res.text).to.equal('not found');
-     });
-      done();
+       done(); 
+     }); 
     });
   });
 
+  describe('DELETE: /api/memo', function() {
+    it('it should delete memo', function(done){
+      request.delete(`localhost:8000/api/memo?id=${memo.id}`)
+     .end((err, res) => {
+       expect(res.status).to.equal(204);
+       expect(res.text).to.be.empty;
+       done(); 
+     });
+    });
+  });
 
 
 });

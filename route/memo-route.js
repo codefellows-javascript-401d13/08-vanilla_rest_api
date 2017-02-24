@@ -29,4 +29,21 @@ module.exports = function(router) {
       response.sendText(res, 400, 'bad request');
     }
   });
+  router.delete('/api/memo', (req, res) => {
+    console.log('anything', req.url.query.id);
+    if (req.url.query.id) {
+      storage.deleteItem('memo', req.url.query.id)
+            .then( () => {
+              response.sendJSON(res, 204, 'nothing here');
+            })
+            .catch( err => {
+              response.sendText(res, 404, 'not found');
+            });
+      return;
+    }
+    if(req.url.query.id) {
+      response.sendText(res, 400, 'bad request');
+    }
+  });
+
 };
