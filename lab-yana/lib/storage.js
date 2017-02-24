@@ -8,7 +8,6 @@ module.exports = exports = {};
 exports.createItem = function(schemaName, item) { // called for POST
   if (!schemaName) return Promise.reject(new Error('expected schema name'));
   if (!item) return Promise.reject(new Error('expected item'));
-  console.log('in create item, the item is: ', item);
   let json = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
   .then( () => item) //return item (blog in this case) object; blog-route.js gets response
@@ -32,16 +31,19 @@ exports.deleteItem = function(schemaName, id) {
   if (!id) return Promise.reject(new Error('expected id'));
 
   fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  .then( () => id)
+  .then( () => {
+    return id;
+  })
   .catch(err => { return Promise.reject(err); }) ;
 };
 
 exports.fetchList = function(schemaName) {
   if (!schemaName) return Promise.reject(new Error('expected schema name'));
-  fs.readdirProm(`${__dirname}/../data/${schemaName}/`)
+  fs.readdirProm(`${__dirname}/../data/${schemaName}`)
   .then(list => {
     try {
-      if (list.length === 0) return Promise.resolve('no blog entries available');
+      console.log('list', list);
+      // if (list.length === 0) return 'no blog entries available';
       return list;
     } catch(err) { return Promise.reject(err); }
   })

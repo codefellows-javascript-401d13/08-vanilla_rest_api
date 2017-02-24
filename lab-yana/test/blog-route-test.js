@@ -86,9 +86,9 @@ describe('Blog Routes', function() {
         done();
       });
     });
-    it('should return a list of stored blog entry IDs', function(done) {
+    it('should return a list of stored blog entry filenames', function(done) {
       var list = []; //array to store list of test IDs
-      list.push(blog.id); //put the thing we stored from the initial POST above
+      list.push(`${blog.id}.json`); //put the thing we stored from the initial POST above
       request.post('localhost:3002/api/blog')
       .send( { name: 'test name', content: 'test content' } )
       .end((err, res) => {
@@ -107,6 +107,7 @@ describe('Blog Routes', function() {
         if (err) return done(err);
         list.push(res.body.id);
       });
+      console.log('array', list);
       request.get('localhost:3002/api/blog')
       .send( { name: 'test name', content: 'test conteent' } )
       .end((err, res) => {
@@ -134,8 +135,15 @@ describe('Blog Routes', function() {
         if (err) return done(err);
         expect(res.status).to.equal(204);
         expect(res.body).to.be.empty;
-        blog = res.body;
-        // console.log('after delete: ', blog);
+        done();
+      });
+    });
+    it('should fail to GET deleted entry', function(done) {
+      request.get(`localhost:3002/api/blog?id=${blog.id}`)
+      .send( { name: 'test name', content: 'test content' } )
+      .end((err, res) => {
+        expect(err).to.be.an('error');
+        expect(res.status).to.equal(404);
         done();
       });
     });
