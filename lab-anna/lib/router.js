@@ -38,7 +38,7 @@ Router.prototype.route = function() {
       if (typeof this.routes[req.method][req.url.pathname] === 'function') {
         this.routes[req.method][req.url.pathname](req, res);
         return;
-      }
+      };
 
       console.error('route not found');
 
