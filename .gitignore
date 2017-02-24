@@ -12,6 +12,9 @@ yarn-error.log*
 #Test-Data
 data/
 
+#Node
+node-modules/
+
 # Runtime data
 pids
 *.pid
