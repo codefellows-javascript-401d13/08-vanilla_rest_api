@@ -10,7 +10,10 @@ yarn-debug.log*
 yarn-error.log*
 
 #Test-Data
+/data
 
+#Node
+/node_modules
 
 # Runtime data
 pids
