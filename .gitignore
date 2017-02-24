@@ -2,6 +2,9 @@
 
 *node_modules
 
+#ignore data files
+data/
+
 ### Node ###
 # Logs
 logs

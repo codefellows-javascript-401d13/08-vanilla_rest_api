@@ -3,7 +3,7 @@
 const request = require('superagent');
 const expect = require('chai').expect;
 
-require('../server.js');
+// require('../server.js');
 
 describe('My Data Routes', function(){
   var mine = null;
@@ -12,6 +12,7 @@ describe('My Data Routes', function(){
     it('it should return mine', function(done){
       request.post('localhost:3000/api/mine')
       .send({ fruit: 'test fruit', apple: 'test apple' })
+      console.log('mine here', mine);
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(200);
@@ -26,12 +27,13 @@ describe('My Data Routes', function(){
   describe('POST: api/mine', function() {
     it('it should return a 400 error', function(done){
       request.post('localhost:3000/api/mine')
-      .send({})
-      .end((err, res) => {
+      .send({ fruit: 'pear'})
+      .end((res) => {
+        console.log(res.text);
         expect(res.status).to.equal(400);
-        expect(res.text).to.equal('bad request');
+        // expect(res.body).to.equal('bad request');
         done();
-      })
+      });
     });
   });
 
@@ -40,12 +42,11 @@ describe('My Data Routes', function(){
     it('should return mine', function(done){
       request.get(`localhost:3000/api/mine?id=${mine.id}`)
       .end((err, res) => {
-        if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.fruit).to.equal('test fruit');
         expect(res.body.apple).to.equal('test apple');
-        done();
       });
+      done();
     });
   });
 
@@ -53,9 +54,9 @@ describe('My Data Routes', function(){
     it('should return a 400 error if no id was provided', function(done){
       request.get('localhost:3000/api/mine')
       .end((err, res) => {
+        console.log('my response', res);
         expect(res.status).to.equal(400);
-        expect(err).to.equal.null;
-        expect(res.text).to.equal('bad request');
+        // expect(res.body).to.equal('bad request');
         done();
       });
     });
@@ -66,12 +67,20 @@ describe('My Data Routes', function(){
       request.get('localhost:3000/api/mine?id=123')
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.text).to.equal('not found');
+        // expect(res.text).to.equal('not found');
         done();
       });
     });
   });
 
-
-
+  describe('DELETE: /api/mine', function(){
+    it('should remove the id', function(done) {
+      request.delete(`localhost:3000/api/mine?id${mine.id}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(204);
+        // expect(res.body).to.equal('undefined');
+        done();
+      });
+    });
+  });
 });
