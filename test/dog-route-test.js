@@ -23,7 +23,6 @@ describe('Dog Routes', function() {
     });
   });
 
-  // POST: test 400, it should respond with 'bad request' if no request body was provided or the body was invalid
   describe('POST: 400 Bad Request', function() {
     it('should return a 400', function(done) {
       request.post('localhost:8000/api/dog')

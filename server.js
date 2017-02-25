@@ -43,6 +43,7 @@ router.post('/api/dog', function(req,res){
       'Content-Type': 'application/json'
     });
     res.write(JSON.stringify(dog));
+    //saving comment below to remember what NOT to do (it broke test)
     // res.write('\nYou used the ' + req.method + ' method.');
     res.end();
   } catch (err) {
@@ -83,7 +84,6 @@ router.delete('/api/dog', function(req,res){
   res.write('BAD REQUEST USING THE ' + req.method + ' method');
   res.end();
 });
-////////
 
 const server = http.createServer(router.route());
 
