@@ -65,4 +65,15 @@ describe('Dog Routes', function() {
       });
     });
   });
+
+  describe('DELETE: REMOVES FROM OBJECT', function() {
+    it('should ', function(done) {
+      request.delete(`localhost:8000/api/dog?id=${dog.id}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(204);
+        done();
+      });
+    });
+  });
+
 });

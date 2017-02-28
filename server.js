@@ -77,7 +77,6 @@ router.delete('/api/dog', function(req,res){
     });
     return;
   }
-
   res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
