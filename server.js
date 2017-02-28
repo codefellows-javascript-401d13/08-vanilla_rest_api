@@ -21,12 +21,10 @@ router.get('/api/guitar', function(req, res) {
       res.end();
     })
     .catch( err => {
-      console.error('we got here:', err);
       res.writeHead(404, {
         'Content-Type': 'text/plain'
       });
       res.write('not found');
-      console.log('here\'s the response:', res);
       res.end();
     });
     return;

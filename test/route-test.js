@@ -39,10 +39,9 @@ describe('Vanilla API Routes', function() {
     it('should result in a 404 error', function(done) {
       request.get('localhost:3000/api/guitar?id=dumb-ass-test')
       .end((err, res) => {
-        // if(err) return done(err);
-        console.log('response status:', res.status);
+        console.log('response text:', res.text);
         expect(res.status).to.equal(404);
-        expect(res.statusMessage).to.equal('not found');
+        expect(res.text).to.equal('not found');
         done();
       });
     });
