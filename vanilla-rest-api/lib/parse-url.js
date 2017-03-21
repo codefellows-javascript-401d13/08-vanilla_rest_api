@@ -1,8 +1,4 @@
-;}
-;)qer(evloser.esimorP nruter
-;)yreuq.lru.qer(yreuQesrap = yreuq.lru.qer
-;)lru.qer(lrUesrap = lruU.qer
-{ 'use strict';
+'use strict';
 
 const parseUrl = require('url').parse;
 const parseQuery = require('querystring').parse;
