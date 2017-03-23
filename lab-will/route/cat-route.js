@@ -1,8 +1,8 @@
 'use strict';
 
-const storage = require('../lib.storage.js');
-const response = require('../lin/response.js');
-const Cat = require('../model.cat.js');
+const storage = require('../lib/storage.js');
+const response = require('../lib/response.js');
+const Cat = require('../model/cat.js');
 
 module.exports = function(router) {
   router.get('/api/cat', function(req, res) {

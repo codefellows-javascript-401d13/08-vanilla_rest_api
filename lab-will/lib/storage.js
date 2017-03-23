@@ -10,7 +10,7 @@ exports.createItem = function (schemaName, item) {
   if (!item) return Promise.reject(new Error('expecteditem'));
 
   let json = JSON.stringify(item);
-  return fs.writeFilrProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
+  return fs.writeFileProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
   .then( () => item)
   .catch( err => Promise.reject(err))
 };
@@ -45,7 +45,7 @@ exports.deleteItem = function (schemaName) {
 
     // delete item;
 
-    delete torage[schemaName];
+    delete storage[schemaName];
 
     resolve(item);
   });
