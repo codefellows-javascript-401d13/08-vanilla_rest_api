@@ -6,7 +6,7 @@ const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 module.exports = exports = {};
 
 exports.createItem = function(schemaName, item) {
-    if (!schemaName) return Promise.reject(new Error('expected schmea name'));
+    if (!schemaName) return Promise.reject(new Error('expected schema name'));
     if (!item) return Promise.reject(new Error('expected item'));
 
     let json = JSON.stringify(item);
@@ -15,7 +15,7 @@ exports.createItem = function(schemaName, item) {
     .catch( err => Promise.reject(err))
 };
 
-exports.fetchItem = function(schemaName, item){
+exports.fetchItem = function(schemaName, id){
     if (!schemaName) return Promise.reject(new Error('expected schema name'));
     if (!id) return Promise.reject(new Error('expected id'));
 
@@ -36,5 +36,6 @@ exports.deleteItem = function(schemaName, id){
     if (!id) return Promise.reject(new Error('expected id'));
 
     return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-    .catch(err => Promise.reject(err));
+    .then( () => id)
+    .catch( err => Promise.reject(err));
 };

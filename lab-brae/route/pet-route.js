@@ -35,17 +35,17 @@ module.exports = function(router) {
     router.delete('api/pet', function(req, res) {
         if (req.url.query.id) {
             storage.deleteItem('pet', req.url.query.id)
-            .then( pet => {
+            .then( () => {
                 response.sendText(res, 204, 'no content');
             })
             .catch(err => {
                 console.error(err);
-                response.sendText(res, 400, 'bad request');
+                response.sendText(res, 404, 'not found');
             });
 
             return;
-        };
-        response.senxText(res, 400, 'bad request');
+        }
+        response.sendText(res, 400, 'bad request');
     });
 };
 
